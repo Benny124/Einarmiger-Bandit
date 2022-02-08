@@ -8,7 +8,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.*;
 import java.util.Random;
-import je.NumberField;
+import java.util.Collections;
+import java.util.Arrays;
 
 /**
  *
@@ -20,57 +21,50 @@ import je.NumberField;
 
 public class EiarmigerBandit extends Application {
   // Anfang Attribute
-  private Button bNeueRundespielen = new Button();
+  private Button button1 = new Button();
   private ImageView imageView1 = new ImageView();
   private ImageView imageView2 = new ImageView();
   private ImageView imageView3 = new ImageView();
-  private Label lEINARMIGERBANDIT = new Label();
-  private Label l = new Label();
-  private NumberField nf = new NumberField();
-  private TextField textField1 = new TextField();
+  Image gta = new Image("GTA.jpg");
+  Image fortnite = new Image ("Fortnite.png");
+  Image amongus = new Image ("Amongus.jpg");
+  Image osu = new Image ("Osu.png");
+  Image runescape = new Image ("Runescape.jpg");
+  Image overwatch = new Image ("Overwatch.jpg");
+  Image minecraft = new Image ("Minecraft.jpg");
+  Image roblox = new Image("Roblox.png");
+  Image[] games = {gta, fortnite, amongus, osu, runescape, roblox, overwatch, minecraft};
+  int Geld = 100;
   // Ende Attribute
   
   public void start(Stage primaryStage) { 
     Pane root = new Pane();
-    Scene scene = new Scene(root, 631, 703);
+    Scene scene = new Scene(root, 631, 705);
     // Anfang Komponenten
     
-    bNeueRundespielen.setLayoutX(246);
-    bNeueRundespielen.setLayoutY(532);
-    bNeueRundespielen.setPrefHeight(49);
-    bNeueRundespielen.setPrefWidth(131);
-    bNeueRundespielen.setOnAction(
-      (event) -> {bNeueRundespielen_Action(event);} 
+    button1.setLayoutX(246);
+    button1.setLayoutY(252);
+    button1.setPrefHeight(25);
+    button1.setPrefWidth(75);
+    button1.setOnAction(
+    (event) -> {button1_Action(event);} 
     );
-    bNeueRundespielen.setText("Neue Runde spielen");
-    root.getChildren().add(bNeueRundespielen);
+    imageView1.setFitWidth(100);
+    imageView1.setPreserveRatio(true);
+    imageView1.setLayoutX(83);
+    imageView1.setLayoutY(383);
+    imageView2.setFitWidth(100);
+    imageView2.setPreserveRatio(true);
+    imageView2.setLayoutX(259);
+    imageView2.setLayoutY(383);
+    imageView3.setFitWidth(100);
+    imageView3.setPreserveRatio(true);
+    imageView3.setLayoutX(429);
+    imageView3.setLayoutY(383);
+    root.getChildren().add(button1);
     root.getChildren().add(imageView1);
     root.getChildren().add(imageView2);
     root.getChildren().add(imageView3);
-    lEINARMIGERBANDIT.setLayoutX(243);
-    lEINARMIGERBANDIT.setLayoutY(66);
-    lEINARMIGERBANDIT.setPrefHeight(20);
-    lEINARMIGERBANDIT.setPrefWidth(166);
-    lEINARMIGERBANDIT.setText("EINARMIGER BANDIT");
-    root.getChildren().add(lEINARMIGERBANDIT);
-    l.setLayoutX(27);
-    l.setLayoutY(163);
-    l.setPrefHeight(28);
-    l.setPrefWidth(46);
-    l.setText("$$");
-    root.getChildren().add(l);
-    nf.setLayoutX(92);
-    nf.setLayoutY(165);
-    nf.setPrefHeight(25);
-    nf.setPrefWidth(75);
-    nf.setText("");
-    nf.setPromptText("$");
-    root.getChildren().add(nf);
-    textField1.setLayoutX(22);
-    textField1.setLayoutY(200);
-    textField1.setPrefHeight(25);
-    textField1.setPrefWidth(150);
-    root.getChildren().add(textField1);
     // Ende Komponenten
     
     primaryStage.setOnCloseRequest(e -> System.exit(0));
@@ -85,36 +79,46 @@ public class EiarmigerBandit extends Application {
     launch(args);
   } // end of main
   
-  public void bNeueRundespielen_Action(Event evt) {
+  public int PunkteBerechten(int a, int b, int c) {
+    int[] Zahlen = {a, b, c};
+    int[] Werte = new int[3];
+    int max = 0;
+    int Wert = 0; 
+    for (int x = 0; x < 3 ; x++) {
+      Wert = 0;
+      for (int y = 0; y < 3 ; y++) {
+        if (Zahlen[x] == Zahlen[y]) {
+          Wert++;
+        } // end of if
+      }
+      Werte[x] = Wert;
+    }
+    for (int i = 0; i < Werte.length; i++) {
+      if (Wert < Werte[i]) {
+        Wert = Werte[i];
+      } // end of if
+    }
+    return Wert;
+  }
+  
+  public void button1_Action(Event evt) {
+    Geld = Geld - 10;
     // TODO hier Quelltext einfügen
-    Image gta = new Image("GTA.jpg");
-    Image fortnite = new Image ("Fortnite.png");
-    Image amongus = new Image ("Amongus.jpg");
-    Image osu = new Image ("Osu.png");
-    Image runescape = new Image ("Runescape.jpg");
-    Image overwatch = new Image ("Overwatch.jpg");
-    Image minecraft = new Image ("Minecraft.jpg");
-    Image roblox = new Image("Roblox.png");
-    Image[] games = {gta, fortnite, amongus, osu, runescape, roblox, overwatch, minecraft};
     int a = new Random().nextInt(7);
     int b = new Random().nextInt(7);
     int c = new Random().nextInt(7);
-    imageView1.setFitWidth(100);
-    imageView1.setPreserveRatio(true);
-    imageView1.setLayoutX(83);
-    imageView1.setLayoutY(383);
+    int Punkte = PunkteBerechten(a, b, c);
+    if (Punkte == 2) {
+      Geld = Geld + 10;
+    } // end of if
+    if (Punkte == 3) {
+      Geld = Geld + 50;
+    } // end of if
+    System.out.println("Geld: " + Geld + "€");
     imageView1.setImage(games[a]);
-    imageView2.setFitWidth(100);
-    imageView2.setPreserveRatio(true);
-    imageView2.setLayoutX(259);
-    imageView2.setLayoutY(383);
     imageView2.setImage(games[b]);
-    imageView3.setFitWidth(100);
-    imageView3.setPreserveRatio(true);
-    imageView3.setLayoutX(429);
-    imageView3.setLayoutY(383);
     imageView3.setImage(games[c]);
-  } // end of bNeueRundespielen_Action
+  } // end of button1_Action
 
   // Ende Methoden
 } // end of class EiarmigerBandit
